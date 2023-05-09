@@ -73,7 +73,7 @@
   * [captcha](example/captcha.md)
   * [cifar](example/cifar.md)
   * [classifier](example/classifier.md)
-  * [coco \[n\]](example/coco-n.md)
+  * [coco](example/coco.md)
   * [darknet \[n\]](example/darknet-n.md)
   * [detector \[n\]](example/detector-n.md)
   * [dice](example/dice.md)

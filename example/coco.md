@@ -1,4 +1,4 @@
-# coco \[n]
+# coco
 
 ```c
 #include "darknet.h"
@@ -102,6 +102,44 @@ void train_coco(char *cfgfile, char *weightfile)
 }
 ```
 
+함수 이름: train\_coco
+
+입력:
+
+* cfgfile: 학습을 위한 YOLO 모델 구성 파일 경로 (문자열)
+* weightfile: 학습을 시작할 때 사용할 가중치 파일 경로 (문자열)
+
+동작:&#x20;
+
+* COCO 데이터셋을 사용하여 YOLO 모델을 학습하는 함수입니다.&#x20;
+* 주어진 cfgfile과 weightfile을 사용하여 YOLO 모델을 불러온 후, train\_images에서 이미지를 로드하고 해당 이미지와 레이블 데이터를 사용하여 모델을 학습합니다.&#x20;
+* 학습 중에는 주기적으로 가중치를 저장하고, 학습 속도, 평균 손실값 등의 정보를 출력합니다.
+
+설명:
+
+* train\_images: 학습에 사용될 이미지와 레이블 데이터 파일 경로 (문자열)
+* backup\_directory: 가중치 파일 백업을 위한 디렉토리 경로 (문자열)
+* base: cfgfile에서 모델 구성 파일 이름 (문자열)
+* avg\_loss: 현재까지의 평균 손실값 (실수)
+* net: YOLO 모델 (네트워크)
+* imgs: 배치 크기 (정수)
+* i: 현재까지 학습한 배치 수 (정수)
+* train: 학습에 사용될 데이터 (데이터 구조체)
+* buffer: 데이터를 불러올 때 사용될 버퍼 (데이터 구조체)
+* l: 모델의 마지막 레이어 (레이어 구조체)
+* side: 출력 그리드 한 변의 길이 (정수)
+* classes: 객체 종류 수 (정수)
+* jitter: 이미지 자르기에 사용되는 임의의 값 (실수)
+* plist: 이미지 파일 경로 리스트 (리스트 구조체)
+* paths: 이미지 파일 경로 배열 (문자열 포인터 배열)
+* args: load\_data\_in\_thread 함수로 전달되는 인자들 (load\_args 구조체)
+* load\_thread: 이미지 및 레이블 데이터를 로드하는 스레드 (pthread\_t)
+* time: 시간 측정을 위한 변수 (clock\_t)
+* loss: 현재 배치의 손실값 (실수)
+* buff: 가중치 파일 이름 등을 저장하는 문자열 버퍼 (문자열)
+
+
+
 ## print\_cocos
 
 ```c
@@ -131,6 +169,32 @@ static void print_cocos(FILE *fp, int image_id, detection *dets, int num_boxes, 
 }
 ```
 
+함수 이름: print\_cocos&#x20;
+
+입력:
+
+* fp (FILE \*) : 출력 파일 포인터
+* image\_id (int) : 이미지 ID
+* dets (detection \*) : 객체 감지 정보 배열 포인터
+* num\_boxes (int) : 객체 감지 정보 배열의 크기
+* classes (int) : 클래스 수
+* w (int) : 이미지 너비
+* h (int) : 이미지 높이&#x20;
+
+동작:&#x20;
+
+* 객체 감지 정보를 COCO 형식의 JSON 파일로 출력하는 함수입니다.&#x20;
+* 각 객체에 대한 정보는 "image\_id", "category\_id", "bbox", "score"의 4가지 정보로 구성됩니다.&#x20;
+* 출력 파일은 입력으로 받은 출력 파일 포인터인 fp에 출력됩니다.&#x20;
+* 입력으로 받은 객체 감지 정보 배열 포인터 dets를 이용하여 bbox 정보를 계산하고, 각 클래스에 대한 확률 정보를 이용하여 COCO 형식의 JSON 파일 형태로 출력합니다.&#x20;
+
+설명:&#x20;
+
+* COCO(Common Objects in Context) 데이터셋은 객체 감지 분야에서 널리 사용되는 데이터셋 중 하나입니다.&#x20;
+* 이 데이터셋에서 사용되는 객체 감지 정보의 출력 형식인 COCO 형식의 JSON 파일을 출력하기 위한 함수입니다.
+
+
+
 ## get\_coco\_image\_id
 
 ```c
@@ -140,6 +204,24 @@ int get_coco_image_id(char *filename)
     return atoi(p+1);
 }
 ```
+
+함수 이름: get\_coco\_image\_id&#x20;
+
+입력:&#x20;
+
+* char \*filename: COCO 데이터셋 이미지 파일의 경로를 가리키는 문자열 포인터&#x20;
+
+동작:&#x20;
+
+* 입력된 이미지 파일 경로에서 이미지 ID를 파싱하여 정수형으로 반환합니다.&#x20;
+
+설명:&#x20;
+
+* COCO 데이터셋에서 이미지 파일의 이름은 'COCO\_\[category]_\[image\_id].jpg'_와 같은 형태로 구성됩니다.&#x20;
+* get\_coco\_image\_id 함수는 입력된 파일 경로에서 _'_'\_" 기호를 기준으로 마지막 문자열을 추출한 뒤, 이를 정수형으로 변환하여 반환합니다.&#x20;
+* 이렇게 추출된 숫자는 해당 이미지의 고유한 ID를 나타냅니다.
+
+
 
 ## validate\_coco
 
@@ -229,6 +311,30 @@ void validate_coco(char *cfg, char *weights)
 }
 ```
 
+함수 이름: validate\_coco
+
+입력:
+
+* cfg: YOLO 모델의 설정 파일 경로를 나타내는 문자열 포인터
+* weights: YOLO 모델의 가중치 파일 경로를 나타내는 문자열 포인터
+
+동작:&#x20;
+
+* 이 함수는 COCO 데이터셋에서 검증을 수행합니다. 주어진 cfg와 weights 파일로부터 YOLO 네트워크를 로드하고, COCO 데이터셋의 이미지를 읽어와 이를 이용해 객체 검출을 수행합니다.&#x20;
+* 이 함수는 검출된 객체들의 위치와 클래스 정보를 coco\_results.json 파일에 저장합니다.
+
+설명:&#x20;
+
+* 이 함수는 YOLO 네트워크를 사용하여 COCO 데이터셋에서 객체 검출을 수행합니다.&#x20;
+* 입력으로는 YOLO 모델의 설정 파일(cfg)과 가중치 파일(weights)의 경로를 받습니다.&#x20;
+* COCO 데이터셋에서 검증 이미지의 경로를 가진 리스트(plist)를 얻은 후, 해당 경로의 이미지들을 읽어들여 YOLO 네트워크로 객체 검출을 수행합니다.&#x20;
+* 이 함수는 검출된 객체들의 위치와 클래스 정보를 coco\_results.json 파일에 저장합니다.
+* 이 함수에서는 다양한 변수들을 설정할 수 있습니다. threshold(thresh) 변수는 객체 검출의 임계값을 나타내며, nms 변수는 Non-Maximum Suppression(NMS)을 수행할 지 여부를 결정합니다.&#x20;
+* iou\_thresh 변수는 NMS에서 사용할 IoU 임계값을 나타냅니다. nthreads 변수는 쓰레드 수를 결정합니다.
+* 이 함수에서는 COCO 데이터셋에 대한 정보도 사용됩니다. COCO 데이터셋에서는 이미지마다 고유한 ID가 존재하는데, 해당 ID를 사용하여 검출된 객체들의 정보를 coco\_results.json 파일에 저장합니다. 클래스 정보를 얻기 위해서는 YOLO 네트워크의 마지막 레이어(l)를 사용합니다.
+
+
+
 ## validate\_coco\_recall
 
 ```c
@@ -315,6 +421,35 @@ void validate_coco_recall(char *cfgfile, char *weightfile)
 }
 ```
 
+함수 이름: validate\_coco\_recall
+
+입력:
+
+* cfgfile: YOLO 모델의 구성 파일 경로
+* weightfile: YOLO 모델의 가중치 파일 경로
+
+동작:
+
+* 주어진 cfgfile과 weightfile을 사용하여 YOLO 모델을 로드한다.
+* 배치 크기를 1로 설정한다.
+* 무작위 시드를 초기화한다.
+* 테스트 이미지 경로가 포함된 파일을 읽어온다.
+* YOLO 모델에서 출력 계층을 가져온다.
+* 출력 계층에서 클래스 수와 네트워크 출력 크기를 가져온다.
+* coco\_classes라는 배열을 사용하여 각 클래스의 결과를 저장할 파일을 열고 파일 포인터를 fps 배열에 저장한다.
+* 테스트 이미지의 수를 계산한다.
+* YOLO 모델을 사용하여 테스트 이미지를 예측한다.
+* 예측된 결과를 토대로 NMS를 실행하여 중복된 검출 결과를 제거한다.
+* 이미지에 대한 정답 레이블 파일 경로를 생성하고 레이블 파일을 읽어들인다.
+* 네트워크 출력과 레이블 파일을 비교하여 평균 IOU와 정확도를 계산한다.
+
+설명:&#x20;
+
+* 이 함수는 COCO 데이터셋에서 YOLO 모델의 검출 결과를 검증하는 기능을 수행한다. 주어진 cfgfile과 weightfile을 사용하여 YOLO 모델을 로드하고, 각 클래스마다 검출 결과를 저장할 파일을 열고 파일 포인터를 저장한다.&#x20;
+* 그리고 테스트 이미지 경로가 포함된 파일을 읽어온 후, YOLO 모델을 사용하여 예측을 실행하고, NMS를 사용하여 중복된 결과를 제거한 후, 정답 레이블과 비교하여 평균 IOU와 정확도를 계산한다.
+
+
+
 ## test\_coco
 
 ```c
@@ -361,6 +496,34 @@ void test_coco(char *cfgfile, char *weightfile, char *filename, float thresh)
 }
 ```
 
+함수 이름: run\_coco&#x20;
+
+입력:
+
+* argc (int): 명령행 인수(argument)의 수
+* argv (char \*\*): 명령행 인수 배열
+
+동작:&#x20;
+
+* coco 데이터셋을 사용하여 객체 검출(object detection)을 실행하는 함수입니다. 함수의 인수로는 명령행 인수를 받아와서 필요한 인수들을 추출하고, 해당하는 검출 함수를 호출합니다.
+
+설명:
+
+* prefix (char \*): "-prefix" 옵션으로 주어진 문자열
+* thresh (float): "-thresh" 옵션으로 주어진 실수값 (기본값 0.2)
+* cam\_index (int): "-c" 옵션으로 주어진 정수값 (기본값 0)
+* frame\_skip (int): "-s" 옵션으로 주어진 정수값 (기본값 0)
+* cfg (char \*): coco 검출을 위한 darknet configuration 파일 경로
+* weights (char \*): coco 검출을 위한 darknet 가중치 파일 경로 (옵션)
+* filename (char \*): coco 검출 대상 이미지/비디오 파일 경로 (옵션)
+* avg (int): "-avg" 옵션으로 주어진 정수값 (기본값 1)
+* coco\_classes (char \*\*): coco 클래스 이름 배열
+* 80: coco 데이터셋의 클래스 수
+* .5: NMS (Non-Maximum Suppression) 임계값
+* 0,0,0,0: yolo\_eval 함수에 전달되는 인자 (사용하지 않음)
+
+
+
 ## run\_coco
 
 ```c
@@ -387,3 +550,19 @@ void run_coco(int argc, char **argv)
     else if(0==strcmp(argv[2], "demo")) demo(cfg, weights, thresh, cam_index, filename, coco_classes, 80, frame_skip, prefix, avg, .5, 0,0,0,0);
 }
 ```
+
+함수 이름: run\_coco 입력:
+
+* argc: int형 변수. 명령행 인자의 개수를 나타낸다.
+* argv: char형 포인터 배열. 명령행 인자를 가리키는 포인터 배열이다.&#x20;
+
+동작:&#x20;
+
+* coco 데이터셋을 이용하여 YOLOv3 모델을 학습하거나 검증하거나, 테스트하거나, 데모를 실행한다.&#x20;
+
+설명:&#x20;
+
+* 이 함수는 argc와 argv를 통해 전달된 인자들을 처리하여 coco 데이터셋을 이용하여 YOLOv3 모델을 학습하거나 검증하거나, 테스트하거나, 데모를 실행한다.&#x20;
+* 함수 내부에서는 입력으로 전달된 인자들을 처리하기 위해 find\_char\_arg(), find\_float\_arg(), find\_int\_arg()와 같은 함수들이 사용되며, 인자들의 값에 따라 다양한 기능을 수행하게 된다.&#x20;
+* 만약 인자의 개수가 부족하면 오류 메시지를 출력하고 함수를 종료한다.
+
