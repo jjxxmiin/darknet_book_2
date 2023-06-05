@@ -10,11 +10,11 @@ description: Yolov4
 
 YOLOv4는 YOLOv3이후에 나온 딥러닝의 정확도를 개선하는 다양한 방법을 적용해 YOLO의 성능을 극대화 하는 방법을 설명합니다.
 
-![](<../.gitbook/assets/bench (2).PNG>)
+<figure><img src="../.gitbook/assets/bench (2).PNG" alt=""><figcaption></figcaption></figure>
 
 위에 표를 보면 속도는 유사하지만 정확도가 매우 많이 개선되었습니다.
 
-![](../.gitbook/assets/od.PNG)
+<figure><img src="../.gitbook/assets/od.PNG" alt=""><figcaption></figcaption></figure>
 
 최근 표준화된 Object Detection의 모델 구조에 대해 요약하면 위와 같습니다. 깔끔하게 정리되서 한눈에 보기 쉽습니다.
 
@@ -39,7 +39,7 @@ YOLOv4는 다양한 기법들을 2가지 범주로 묶어서 설명합니다.
 * CutMix
 * GAN
 
-![](../.gitbook/assets/cutmix.PNG)
+<figure><img src="../.gitbook/assets/cutmix.PNG" alt=""><figcaption></figcaption></figure>
 
 여기서 Random Erase는 CutOut과 비슷한데 CutOut은 제거한 영역을 0으로 채우는 반면, Random Erase는 랜덤한 값으로 채웁니다.
 
@@ -82,7 +82,7 @@ IF 0.2인 경우
 * CIOU(Complete Intersection over Union)
 * DIOU(Distance Intersection over Union)
 
-![](../.gitbook/assets/iou.PNG)
+<figure><img src="../.gitbook/assets/iou.PNG" alt=""><figcaption></figcaption></figure>
 
 ### Bag Of Specials
 
@@ -108,7 +108,7 @@ RFB(Receptive Field Block Net)
 
 SE(Squeeze-and-Excitation)
 
-![](../.gitbook/assets/se.PNG)
+<figure><img src="../.gitbook/assets/se.PNG" alt=""><figcaption></figcaption></figure>
 
 약 2% 연산량이 증가지만 1% 정확도가 향상 된다. 하지만 GPU에서 추론시간이 10% 증가한다.
 
@@ -116,21 +116,21 @@ SE(Squeeze-and-Excitation)
 
 SAM(Spatial Attention module) 0.1% 연산량이 증가하고 0.5% 정확도가 향상된다. GPU 추론시간에 영향이 없다.
 
-![](../.gitbook/assets/sam.PNG)
+<figure><img src="../.gitbook/assets/sam.PNG" alt=""><figcaption></figcaption></figure>
 
 #### SFAM
 
 SPAM(Scale-wise Feature Aggregation Module)은 SE 모듈을 사용해 multi scale이 연결 된 특징 맵에서 channelwise level re-weighting을 합니다.
 
-![](../.gitbook/assets/sfam.PNG)
+<figure><img src="../.gitbook/assets/sfam.PNG" alt=""><figcaption></figcaption></figure>
 
 SFAM 논문에서 사용 된 모델의 전체적인 흐름을 나타냅니다.
 
-![](../.gitbook/assets/sfam2.PNG)
+<figure><img src="../.gitbook/assets/sfam2.PNG" alt=""><figcaption></figcaption></figure>
 
 (a) : FFMv1 (b) : FFMv2 (c) : TUM
 
-![](../.gitbook/assets/sfam3.PNG)
+<figure><img src="../.gitbook/assets/sfam3.PNG" alt=""><figcaption></figcaption></figure>
 
 SFAM을 묘사한 그림입니다.
 
@@ -138,13 +138,13 @@ SFAM을 묘사한 그림입니다.
 
 ASFF(Adaptively Spatial Feature Fusion)
 
-![](../.gitbook/assets/asff.PNG)
+<figure><img src="../.gitbook/assets/asff.PNG" alt=""><figcaption></figcaption></figure>
 
 #### BiFPN
 
 multi input weighted residual connections는 scale-wise level re-weighting을 실행한 다음 다른 스케일의 특징 맵을 추가하기 위해서 제안됩니다.
 
-![](../.gitbook/assets/bifpn.PNG)
+<figure><img src="../.gitbook/assets/bifpn.PNG" alt=""><figcaption></figcaption></figure>
 
 #### Activation Function
 
@@ -161,7 +161,7 @@ multi input weighted residual connections는 scale-wise level re-weighting을 �
 * NMS
 * Soft NMS
 
-![](../.gitbook/assets/nms.PNG)
+<figure><img src="../.gitbook/assets/nms.PNG" alt=""><figcaption></figcaption></figure>
 
 겹치는 bouning box를 후처리 해주는 작업은 위에 식으로 표현할 수 있습니다.
 
@@ -177,7 +177,7 @@ multi input weighted residual connections는 scale-wise level re-weighting을 �
 
 classification이 최적인 모델이라고 해서 detector에서도 최적이 아닙니다.
 
-![](../.gitbook/assets/table.PNG)
+<figure><img src="../.gitbook/assets/table.PNG" alt=""><figcaption></figcaption></figure>
 
 * 높은 입력 해상도 : 작은 크기의 객체를 검출
 * 더 많은 계층 : 증가 된 해상도를 커버하기 위한 더 높은 receptive field
@@ -191,7 +191,7 @@ YOLOv3는 CSPDarkNet53에 SPP 블록을 추가하고 YOLOv3에서 사용되는 F
 
 CSP(Cross-Stage-Partial-Connections)
 
-![](../.gitbook/assets/csp.PNG)
+<figure><img src="../.gitbook/assets/csp.PNG" alt=""><figcaption></figcaption></figure>
 
 특징 맵 채널의 절반만 Residual Block을 통과하기 때문에 Bottleneck layer를 사용 할 필요가 없습니다.
 
@@ -202,16 +202,16 @@ CSP(Cross-Stage-Partial-Connections)
   * 4개의 학습 이미지를 혼합한다.
   * Mini Batch가 크지 않아도 된다.(혼합 자체로 효과적임)
 
-![](../.gitbook/assets/mosaic.PNG)
+<figure><img src="../.gitbook/assets/mosaic.PNG" alt=""><figcaption></figcaption></figure>
 
 * modified SAM
 * modified PAN
 
-![](../.gitbook/assets/new.PNG)
+<figure><img src="../.gitbook/assets/new.PNG" alt=""><figcaption></figcaption></figure>
 
 * Cross mini-Batch Normalization(CmBN)
 
-![](../.gitbook/assets/cmbn.PNG)
+<figure><img src="../.gitbook/assets/cmbn.PNG" alt=""><figcaption></figcaption></figure>
 
 **Activation**
 
@@ -263,9 +263,9 @@ CSP(Cross-Stage-Partial-Connections)
 * BoS experiments : activation function 검증
 * genetic algorithm : hyper parameter search (lr : 0.00261, momentum : 0.949, IoU thresholds : 0.213, loss normalizer : 0.07)
 
-![](../.gitbook/assets/table2.PNG)
+<figure><img src="../.gitbook/assets/table2.PNG" alt=""><figcaption></figcaption></figure>
 
-![](../.gitbook/assets/table3.PNG)
+<figure><img src="../.gitbook/assets/table3.PNG" alt=""><figcaption></figcaption></figure>
 
 * S : Eliminate grid sensitivity : sigmoid에 1.0을 초과하는 계수를 곱해 object가 검출되지 않는 grid의 영향을 제거한다.
 * M : Mosaic
@@ -277,13 +277,13 @@ CSP(Cross-Stage-Partial-Connections)
 * DM : dynamic minibatch size
 * OA : optimized anchors
 
-![](../.gitbook/assets/table4.PNG)
+<figure><img src="../.gitbook/assets/table4.PNG" alt=""><figcaption></figcaption></figure>
 
 * classification accuracy가 높다고 detector accuracy가 항상 높은건 아닙니다.
 * CSPResNet50의 classification accurac가 높지만 detector accuracy는 CSPDarkNet53이 더 높습니다.
 * CSPResNet50에 BoF, Mish를 사용하면 classification accuracy는 높아지지만 detector accuracy는 낮아집니다.
 
-![](../.gitbook/assets/table5.PNG)
+<figure><img src="../.gitbook/assets/table5.PNG" alt=""><figcaption></figcaption></figure>
 
 * CSPDarkNet53에 BoF, Mish를 사용하면 detector accuracy가 높아집니다.
 * BOF, BOS를 추가한 뒤 mini batch size가 성능에 거의 영향을 미치지 않습니다.
@@ -291,4 +291,4 @@ CSP(Cross-Stage-Partial-Connections)
 
 ### Result
 
-![](../.gitbook/assets/result.PNG)
+<figure><img src="../.gitbook/assets/result.PNG" alt=""><figcaption></figcaption></figure>
